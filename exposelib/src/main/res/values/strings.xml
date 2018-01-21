@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Expose Lib</string>
+    <string name="tools_text">Text goes here</string>
+    <string name="invalid_joke">Something went wrong. It is not a joke :).</string>
+</resources>
