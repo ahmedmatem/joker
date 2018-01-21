@@ -11,15 +11,15 @@ public class JokeProvider {
 
     // number of sentences
     private static int MIN_NUMBER_OF_SENTENCE = 3;
-    private static int MAX_NUMBER_OF_SENTENCE = 5;
+    private static int MAX_NUMBER_OF_SENTENCE = 10;
 
     // number of words in a sentence
     private static int MIN_WORDS_IN_SENTENCE = 4;
-    private static int MAX_WORDS_IN_SENTENCE = 8;
+    private static int MAX_WORDS_IN_SENTENCE = 15;
 
     // number of letters in a word
     private static int MIN_LETTERS_IN_WORD = 1;
-    private static int MAX_LETTERS_IN_WORD = 8;
+    private static int MAX_LETTERS_IN_WORD = 10;
 
     private static Random mRandom;
 
@@ -68,7 +68,7 @@ public class JokeProvider {
     }
 
     private static int getNumberOfSentences() {
-        return MIN_WORDS_IN_SENTENCE + mRandom.nextInt(
+        return MIN_NUMBER_OF_SENTENCE + mRandom.nextInt(
                 MAX_NUMBER_OF_SENTENCE - MIN_NUMBER_OF_SENTENCE);
     }
 
