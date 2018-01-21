@@ -23,11 +23,8 @@ public class JokeProvider {
 
     private static Random mRandom;
 
-    public JokeProvider() {
-        mRandom = new Random();
-    }
-
     public static String generateJoke() {
+        mRandom = new Random();
         int numberOfSentences = getNumberOfSentences();
         int numberOfWords;
         int numberOfLetters;
@@ -40,7 +37,7 @@ public class JokeProvider {
             for (int w = 0; w < numberOfWords; w++) {
                 numberOfLetters = getNumberOfLettersInWord();
                 for (int l = 0; l < numberOfLetters; l++) {
-                    if (w == 0) { // first word in sentence
+                    if (w == 0 && l == 0) { // first word in sentence
                         letter = ALPHABET_UPPERCASE
                                 .charAt(mRandom.nextInt(ALPHABET_LENGTH));
                     } else {
@@ -57,6 +54,8 @@ public class JokeProvider {
                             .charAt(mRandom
                                     .nextInt(SENTENCE_END_MARKS.length())));
                 }
+                // append interval after each word
+                joke.append(" ");
             }
             if (s < (numberOfSentences - 1)) {
                 // not last sentence
@@ -80,6 +79,6 @@ public class JokeProvider {
 
     private static int getNumberOfLettersInWord() {
         return MIN_LETTERS_IN_WORD + mRandom.nextInt(
-                MAX_LETTERS_IN_WORD - MAX_LETTERS_IN_WORD);
+                MAX_LETTERS_IN_WORD - MIN_LETTERS_IN_WORD);
     }
 }
