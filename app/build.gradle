@@ -62,5 +62,5 @@ dependencies {
 
     freeImplementation 'com.google.android.gms:play-services-ads:11.8.0'
 
-    compile project(':exposelib')
+    implementation project(':exposelib')
 }
