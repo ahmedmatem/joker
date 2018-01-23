@@ -1,20 +1,23 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class EndpointsAsyncTaskTest {
+import static junit.framework.Assert.assertTrue;
 
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule =
-            new ActivityTestRule<>(MainActivity.class);
+@RunWith(AndroidJUnit4.class)
+public class EndpointsAsyncTaskTest implements EndpointsAsyncTask.JokeHandler {
 
     @Test
-    public void endpointsAsyncTaskTest() {
+    public void retrieveNonEmptyString() {
+        EndpointsAsyncTask asyncTask = new EndpointsAsyncTask(this);
+        asyncTask.execute();
+    }
+
+    @Override
+    public void onJokeRetrieved(String joke) {
+        assertTrue(joke.length() > 0);
     }
 }
