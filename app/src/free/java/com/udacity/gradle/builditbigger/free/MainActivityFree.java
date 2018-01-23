@@ -1,33 +1,50 @@
-package com.udacity.gradle.builditbigger;
+package com.udacity.gradle.builditbigger.free;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.android.exposelib.JokeActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.udacity.gradle.builditbigger.EndpointsAsyncTask;
+import com.udacity.gradle.builditbigger.R;
 
+public class MainActivityFree extends AppCompatActivity
+        implements EndpointsAsyncTask.JokeHandler {
+    private static final String TAG = "MainActivityFree";
 
-public class MainActivity extends AppCompatActivity implements EndpointsAsyncTask.JokeHandler {
-    private static final String TAG = "MainActivity";
+    private InterstitialAd mInterstitialAd;
     private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: starts from main/paid source set");
+        Log.d(TAG, "onCreate: starts on free source set");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_free);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener(){
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+            }
+
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                // Load the next interstitial.
+//                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
 
         spinner = (ProgressBar)findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
@@ -57,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements EndpointsAsyncTas
     }
 
     public void tellJoke(View view) {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+//            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
         spinner.setVisibility(View.VISIBLE);
         new EndpointsAsyncTask(this).execute();
     }
